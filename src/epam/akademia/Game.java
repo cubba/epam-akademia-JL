@@ -15,44 +15,45 @@ import java.io.InputStreamReader;
  * @author cubba
  */
 public class Game {
+
     private Board board;
     private char actualMove;
-    
-    public Game(int size){
+
+    public Game(int size) {
         board = new Board(size);
     }
-    
-    public void startGame(){
+
+    public void startGame() {
         System.out.println("NEW GAME STARTED");
         setFirstMove();
-        playGame();      
+        playGame();
     }
-    
+
     public void setFirstMove() {
         System.out.println("WHO GOES FIRST O OR X?");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         String a = "";
-        do{
+        do {
             System.out.println("YOU MUST TYPE O OR X");
             try {
                 a = reader.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }while (!a.equalsIgnoreCase("O") && !a.equalsIgnoreCase("X"));
+        } while (!a.equalsIgnoreCase("O") && !a.equalsIgnoreCase("X"));
         a = a.toUpperCase();
         actualMove = a.charAt(0);
     }
-    
+
     //zamienic na enuma jak bedzie czas
-    public int getColRow(String colRow){
+    public int getColRow(String colRow) {
         int index = 0;
         int boardSize = board.getSize();
         String input = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
-            System.out.println("PLEASE ENTER  " + colRow + " to put " + actualMove);
+            System.out.println("PLEASE ENTER A " + colRow + " TO PUT " + actualMove);
             try {
                 input = reader.readLine();
             } catch (IOException e) {
@@ -69,35 +70,34 @@ public class Game {
                 System.out.println("INCORRECT NUMBER");
                 continue;
             }
-            
+
             return index;
         }
     }
-    
+
     public void playGame() {
-        while (true) {      
+        while (true) {
             board.printBoard();
-                  
+
             int row = getColRow("ROW");
             int col = getColRow("COL");
-            
-            while(!board.isCellEmpty(row, col)){
+
+            while (!board.isCellEmpty(row, col)) {
                 System.out.println("THIS CELL HAS BEEN ALREADY FILLED");
                 row = getColRow("ROW");
                 col = getColRow("COL");
             }
-            
+
             board.setCell(row, col, actualMove);
-            
-            
-            if(board.checkIfWon(row, col, actualMove, 3)){
+
+            if (board.checkIfWon(row, col, actualMove, 3)) {
                 board.printBoard();
-                System.out.println("PLAYER WHO STARTED WITH " + actualMove + " WINS");
+                System.out.println("PLAYER WITH " + actualMove + " WINS !");
                 break;
             }
-            
-            if(board.isBoardFull()){
-                System.out.println("BOARD IS EMPTY. TIE");
+
+            if (board.isBoardFull()) {
+                System.out.println("BOARD IS FULL. TIE !");
                 break;
             }
 
@@ -108,17 +108,11 @@ public class Game {
             }
         }
     }
-    
-    
-    
-//    public char getMove(){
-//        
-//    }
-    
+
     public static void main(String[] args) {
         Game game;
         while (true) {
-            System.out.println("Do you want to play a game?  Y/N");
+            System.out.println("DO YOU WANT TO PLAY A GAME?  Y/N");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
             String input = "";
@@ -132,10 +126,10 @@ public class Game {
                 game = new Game(3);
                 game.startGame();
             } else if (input.equalsIgnoreCase("n")) {
-                System.out.println("Thank you for playing the game. Good bye!");
+                System.out.println("THANK YOU FOR PLAYING THE GAME. GOOD BYE!");
                 break;
             }
         }
     }
-    
+
 }
