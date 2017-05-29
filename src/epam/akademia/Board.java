@@ -56,6 +56,24 @@ public class Board {
         }   
     }
     
+    public boolean isCellEmpty(int row, int col) {
+        if (boardCells[row - 1][col - 1] == '\u0000') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean isBoardFull(){
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j< size; j++){
+                if(boardCells[i][j] == '\u0000')
+                    return false;
+            }
+        }
+        return true;
+    }
+    
     public boolean checkIfWon(int row, int col, char value, int numberToWin){
         row = row - 1;
         col = col - 1;

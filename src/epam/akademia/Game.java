@@ -52,7 +52,7 @@ public class Game {
         String input = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
-            System.out.println("Please put " + colRow + " to put " + actualMove);
+            System.out.println("PLEASE ENTER  " + colRow + " to put " + actualMove);
             try {
                 input = reader.readLine();
             } catch (IOException e) {
@@ -75,16 +75,29 @@ public class Game {
     }
     
     public void playGame() {
-        while (true) {
+        while (true) {      
             board.printBoard();
+                  
             int row = getColRow("ROW");
             int col = getColRow("COL");
+            
+            while(!board.isCellEmpty(row, col)){
+                System.out.println("THIS CELL HAS BEEN ALREADY FILLED");
+                row = getColRow("ROW");
+                col = getColRow("COL");
+            }
+            
             board.setCell(row, col, actualMove);
             
             
             if(board.checkIfWon(row, col, actualMove, 3)){
                 board.printBoard();
                 System.out.println("PLAYER WHO STARTED WITH " + actualMove + " WINS");
+                break;
+            }
+            
+            if(board.isBoardFull()){
+                System.out.println("BOARD IS EMPTY. TIE");
                 break;
             }
 
@@ -96,13 +109,33 @@ public class Game {
         }
     }
     
+    
+    
 //    public char getMove(){
 //        
 //    }
     
     public static void main(String[] args) {
-        Game game = new Game(3);
-        game.startGame();
+        Game game;
+        while (true) {
+            System.out.println("Do you want to play a game?  Y/N");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            String input = "";
+            try {
+                input = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (input.equalsIgnoreCase("y")) {
+                game = new Game(3);
+                game.startGame();
+            } else if (input.equalsIgnoreCase("n")) {
+                System.out.println("Thank you for playing the game. Good bye!");
+                break;
+            }
+        }
     }
     
 }
